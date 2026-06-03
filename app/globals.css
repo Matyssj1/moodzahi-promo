@@ -1,26 +1,71 @@
 @import "tailwindcss";
 
+/* ── Light mode (default) ──────────────────────── */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --bg-base:        #ffffff;
+  --bg-surface:     #f4f4f5;
+  --bg-card:        #e4e4e7;
+  --border:         #d4d4d8;
+  --text-primary:   #09090b;
+  --text-secondary: #52525b;
+  --text-muted:     #a1a1aa;
+  --accent:         #facc15;
+  --accent-subtle:  rgba(250,204,21,0.15);
+  --accent-border:  rgba(250,204,21,0.40);
+  --glow:           rgba(250,204,21,0.12);
+  --gap: 16px;
+}
+
+/* ── Dark mode ─────────────────────────────────── */
+/* html.dark tiene mayor especificidad que :root */
+html.dark {
+  --bg-base:        #09090b;
+  --bg-surface:     #18181b;
+  --bg-card:        #27272a;
+  --border:         #3f3f46;
+  --text-primary:   #ffffff;
+  --text-secondary: #a1a1aa;
+  --text-muted:     #52525b;
+  --accent:         #facc15;
+  --accent-subtle:  rgba(250,204,21,0.10);
+  --accent-border:  rgba(250,204,21,0.30);
+  --glow:           rgba(250,204,21,0.07);
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+* { box-sizing: border-box; }
+
+html {
+  background-color: var(--bg-base);
+  transition: background-color 0.3s ease;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background-color: var(--bg-base);
+  color: var(--text-primary);
+  margin: 0;
+  padding: 0;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* ── Infinite slider keyframes ─────────────────── */
+@keyframes infinite-scroll-x {
+  from { transform: translateX(0); }
+  to   { transform: translateX(calc(-50% - var(--gap) / 2)); }
+}
+@keyframes infinite-scroll-x-reverse {
+  from { transform: translateX(calc(-50% - var(--gap) / 2)); }
+  to   { transform: translateX(0); }
+}
+@keyframes infinite-scroll-y {
+  from { transform: translateY(0); }
+  to   { transform: translateY(calc(-50% - var(--gap) / 2)); }
+}
+@keyframes infinite-scroll-y-reverse {
+  from { transform: translateY(calc(-50% - var(--gap) / 2)); }
+  to   { transform: translateY(0); }
 }
