@@ -16,7 +16,7 @@ import ReCAPTCHA from "react-google-recaptcha";
 
 const featureIcons = [
   { icon: Activity, label: "Actividad en tiempo real" },
-  { icon: MapPin, label: "Rutas inteligentes" },
+  { icon: MapPin, label: "Trackea tu ruta" },
   { icon: HeartPulse, label: "Monitor cardíaco" },
   { icon: Mountain, label: "Perfil de elevación" },
   { icon: Timer, label: "Cronómetro de carrera" },
@@ -94,6 +94,7 @@ export function HeroSection() {
             src="/assets/zahi-portada.jpeg"
             alt="Zahi Portada 1"
             fill
+            sizes="(max-width: 768px) 50vw, 25vw"
             priority
             style={{ objectFit: "cover", objectPosition: "top" }}
           />
@@ -105,6 +106,7 @@ export function HeroSection() {
             src="/assets/zahi-portada-3.jpeg"
             alt="Zahi Portada 2"
             fill
+            sizes="(max-width: 768px) 50vw, 25vw"
             priority
             style={{ objectFit: "cover", objectPosition: "top" }}
           />
@@ -116,6 +118,7 @@ export function HeroSection() {
             src="/assets/zahi-portada-2.jpeg"
             alt="Zahi Portada 3"
             fill
+            sizes="(max-width: 768px) 50vw, 25vw"
             priority
             style={{ objectFit: "cover", objectPosition: "top" }}
           />
@@ -127,6 +130,7 @@ export function HeroSection() {
             src="/assets/zahi-portada-4.jpeg"
             alt="Zahi Portada 4"
             fill
+            sizes="(max-width: 768px) 50vw, 25vw"
             priority
             style={{ objectFit: "cover", objectPosition: "top" }}
           />
@@ -141,16 +145,15 @@ export function HeroSection() {
         <motion.div
           initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
-          className="text-2xl font-black tracking-tight pointer-events-auto text-white"
+          className="pointer-events-auto flex items-center"
         >
-          MOOD{" "}
-          <span style={{
-            background: "linear-gradient(to right, #facc15, #f59e0b)",
-            WebkitBackgroundClip: "text",
-            WebkitTextFillColor: "transparent",
-          }}>
-            ZAHI
-          </span>
+          <Image 
+            src="/assets/logo-moodzahi.svg" 
+            alt="Mood Zahi Logo" 
+            width={150} 
+            height={50} 
+            className="w-28 md:w-36 h-auto"
+          />
         </motion.div>
 
         <motion.div
@@ -184,7 +187,7 @@ export function HeroSection() {
 
           {/* Subtítulo */}
           <p className="mb-10 max-w-2xl text-base md:text-xl text-zinc-200 font-medium drop-shadow-md">
-            La app que corre contigo. Entrenamiento adaptativo, rutas inteligentes y comunidad para runners.
+            La app que corre contigo. Entrenamiento adaptativo, trackeo de rutas y comunidad para runners.
           </p>
 
           {/* Formulario */}

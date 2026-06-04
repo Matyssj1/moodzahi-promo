@@ -7,7 +7,7 @@ import { FinalCTASection } from "@/components/blocks/final-cta-section";
 
 export default function Home() {
   return (
-    <main>
+    <main className="relative flex flex-col min-h-screen">
       <HeroSection />
       <AppPreviewSection />
       <App3DSection />

@@ -40,15 +40,14 @@ export function ZahiSection() {
             className="absolute inset-0 md:hidden"
             style={{ background: "linear-gradient(to top, var(--bg-surface) 0%, transparent 60%)" }}
           />
-          <div
-            className="absolute top-6 left-6 rounded-full px-4 py-1.5 text-xs font-bold uppercase tracking-widest backdrop-blur-sm shadow-md"
-            style={{
-              border: "1px solid var(--accent-border)",
-              backgroundColor: "var(--accent-subtle)",
-              color: "var(--accent)",
-            }}
-          >
-            mood zahi
+          <div className="absolute top-6 left-6">
+            <Image 
+              src="/assets/logo-moodzahi.svg" 
+              alt="Mood Zahi Logo" 
+              width={120} 
+              height={40} 
+              className="w-24 md:w-32 h-auto"
+            />
           </div>
         </motion.div>
 
