@@ -18,8 +18,10 @@ export function FinalCTASection() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-      setError("Ingresá un email válido.");
+    const emailRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
+    
+    if (!email || email.length > 255 || !emailRegex.test(email)) {
+      setError("Ingresá un email válido (ej: nombre@dominio.com).");
       return;
     }
     setLoading(true);
@@ -34,7 +36,18 @@ export function FinalCTASection() {
         return;
       }
 
-      await new Promise((r) => setTimeout(r, 1000));
+      const response = await fetch("/api/waitlist", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, recaptchaToken: token }),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok || !data.success) {
+        throw new Error(data.message || "Error al registrar el correo.");
+      }
+
       sendGAEvent("event", "generate_lead", { value: "waitlist_footer" });
       setSubmitted(true);
     } catch {
@@ -145,7 +158,11 @@ export function FinalCTASection() {
                   <input
                     type="email"
                     value={email}
-                    onChange={(e) => { setEmail(e.target.value); setError(""); }}
+                    onChange={(e) => { 
+                      const sanitizedValue = e.target.value.replace(/[\s"()*,:;<>[\\\]]/g, '');
+                      setEmail(sanitizedValue); 
+                      setError(""); 
+                    }}
                     placeholder="tu@email.com"
                     className="w-full h-14 rounded-xl px-5 text-sm transition focus:outline-none"
                     style={{
