@@ -37,8 +37,12 @@ export function HeroSection() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-      setError("Ingresá un email válido.");
+    
+    // Validación estricta HTML5 de email
+    const emailRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
+    
+    if (!email || email.length > 255 || !emailRegex.test(email)) {
+      setError("Ingresá un email válido (ej: nombre@dominio.com).");
       return;
     }
 
@@ -199,7 +203,12 @@ export function HeroSection() {
                   <div className="flex-1">
                     <input
                       type="email" value={email}
-                      onChange={(e) => { setEmail(e.target.value); setError(""); }}
+                      onChange={(e) => { 
+                        // Bloquear espacios y caracteres que jamás van en un email
+                        const sanitizedValue = e.target.value.replace(/[\s"()*,:;<>[\\\]]/g, '');
+                        setEmail(sanitizedValue); 
+                        setError(""); 
+                      }}
                       placeholder="Tu mejor email"
                       className="w-full h-14 rounded-xl px-5 text-sm font-medium transition focus:outline-none focus:ring-2 focus:ring-yellow-400/50 bg-white/10 border border-white/20 text-white placeholder:text-zinc-400 backdrop-blur-md text-center sm:text-left"
                     />

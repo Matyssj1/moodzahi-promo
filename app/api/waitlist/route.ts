@@ -5,17 +5,41 @@ export async function POST(req: Request) {
   try {
     const { email, recaptchaToken } = await req.json();
 
-    if (!email || typeof email !== 'string') {
+    // 1. VALIDACIÓN ESTRICTA DE EMAIL (Formato HTML5 y límite de longitud)
+    const emailRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
+    if (!email || typeof email !== 'string' || email.length > 255 || !emailRegex.test(email)) {
       return NextResponse.json(
-        { success: false, message: 'Email inválido' },
+        { success: false, message: 'Email inválido o formato incorrecto.' },
         { status: 400 }
       );
     }
 
-    // Aquí podrías agregar validación adicional del recaptchaToken haciendo una petición a Google
-    // si lo deseas en el futuro.
+    // 2. VERIFICACIÓN DE RECAPTCHA CONTRA LOS SERVIDORES DE GOOGLE
+    if (!recaptchaToken) {
+      return NextResponse.json(
+        { success: false, message: 'Falta la verificación de seguridad (reCAPTCHA).' },
+        { status: 400 }
+      );
+    }
 
-    // Conectar y ejecutar inserción
+    const secretKey = process.env.RECAPTCHA_SECRET_KEY;
+    if (!secretKey || secretKey === "PONER_AQUI_LA_CLAVE_SECRETA") {
+      console.warn("ADVERTENCIA: RECAPTCHA_SECRET_KEY no está configurada o es la de prueba. Se saltará la verificación real.");
+    } else {
+      const verifyUrl = `https://www.google.com/recaptcha/api/siteverify?secret=${secretKey}&response=${recaptchaToken}`;
+      const recaptchaResponse = await fetch(verifyUrl, { method: "POST" });
+      const recaptchaData = await recaptchaResponse.json();
+
+      if (!recaptchaData.success || recaptchaData.score < 0.5) {
+        console.error("Fallo de reCAPTCHA:", recaptchaData);
+        return NextResponse.json(
+          { success: false, message: 'No pudimos verificar que eres humano. Intenta de nuevo.' },
+          { status: 403 }
+        );
+      }
+    }
+
+    // 3. CONEXIÓN A BASE DE DATOS Y GUARDADO
     const connection = await pool.getConnection();
     
     try {
@@ -26,7 +50,6 @@ export async function POST(req: Request) {
       
       return NextResponse.json({ success: true, message: '¡Te has unido a la lista de espera exitosamente!' });
     } catch (error: any) {
-      // Código de error 1062 es Entrada Duplicada (Duplicate entry) en MySQL
       if (error.code === 'ER_DUP_ENTRY') {
         return NextResponse.json({ success: true, message: 'Ya estabas registrado en la lista de espera.' });
       }
@@ -36,7 +59,7 @@ export async function POST(req: Request) {
         { status: 500 }
       );
     } finally {
-      connection.release(); // Siempre liberar la conexión
+      connection.release();
     }
 
   } catch (error) {
