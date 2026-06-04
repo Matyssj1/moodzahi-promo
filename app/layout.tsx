@@ -16,7 +16,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "mood zahi — La app que corre contigo",
+  title: "MoodZahi",
   description:
     "Entrenamiento adaptativo, rutas inteligentes y comunidad de runners. Únete a la lista de espera.",
 };
