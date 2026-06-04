@@ -1,7 +1,7 @@
 "use client";
 
 import { useRef, useState, useEffect } from "react";
-import { motion, useScroll, useTransform } from "framer-motion";
+import { motion, useScroll, useTransform, useSpring } from "framer-motion";
 import { MapPin, HeartPulse, Zap, Timer } from "lucide-react";
 import { useWindowSize } from "@/lib/use-window-size";
 
@@ -17,19 +17,26 @@ export function App3DSection() {
     offset: ["start end", "end start"],
   });
 
-  const rotateY = useTransform(scrollYProgress, [0.05, 0.55], isMobile ? [-30, 0] : [-52, 0]);
-  const rotateX = useTransform(scrollYProgress, [0.05, 0.55], isMobile ? [8, -3] : [12, -3]);
-  const scale = useTransform(scrollYProgress, [0.05, 0.45, 0.9], isMobile ? [0.65, 0.85, 0.75] : [0.55, 0.75, 0.65]);
-  const opacity = useTransform(scrollYProgress, [0.04, 0.18, 0.82, 0.96], [0, 1, 1, 0]);
-  const cardOpacity = useTransform(scrollYProgress, [0.2, 0.4, 0.75, 0.9], [0, 1, 1, 0]);
-  const hintOpacity = useTransform(scrollYProgress, [0, 0.15], [1, 0]);
+  // Suavizado cinemático del scroll
+  const smoothProgress = useSpring(scrollYProgress, {
+    stiffness: 100,
+    damping: 30,
+    restDelta: 0.001
+  });
 
-  const card1Y = useTransform(scrollYProgress, [0, 1], isMobile ? [-30, 30] : [-60, 60]);
-  const card2Y = useTransform(scrollYProgress, [0, 1], isMobile ? [20, -30] : [40, -50]);
+  const rotateY = useTransform(smoothProgress, [0.05, 0.55], isMobile ? [-30, 0] : [-52, 0]);
+  const rotateX = useTransform(smoothProgress, [0.05, 0.55], isMobile ? [8, -3] : [12, -3]);
+  const scale = useTransform(smoothProgress, [0.05, 0.45, 0.9], isMobile ? [0.65, 0.85, 0.75] : [0.55, 0.75, 0.65]);
+  const opacity = useTransform(smoothProgress, [0.04, 0.18, 0.82, 0.96], [0, 1, 1, 0]);
+  const cardOpacity = useTransform(smoothProgress, [0.2, 0.4, 0.75, 0.9], [0, 1, 1, 0]);
+  const hintOpacity = useTransform(smoothProgress, [0, 0.15], [1, 0]);
+
+  const card1Y = useTransform(smoothProgress, [0, 1], isMobile ? [-30, 30] : [-60, 60]);
+  const card2Y = useTransform(smoothProgress, [0, 1], isMobile ? [20, -30] : [40, -50]);
 
   // En mobile, las tarjetas se acercan más al centro o se posicionan distinto
-  const card1X = useTransform(scrollYProgress, [0.1, 0.6], isMobile ? [20, 0] : [40, 0]);
-  const card2X = useTransform(scrollYProgress, [0.1, 0.6], isMobile ? [-20, 0] : [-40, 0]);
+  const card1X = useTransform(smoothProgress, [0.1, 0.6], isMobile ? [20, 0] : [40, 0]);
+  const card2X = useTransform(smoothProgress, [0.1, 0.6], isMobile ? [-20, 0] : [-40, 0]);
 
   const card1TranslateX = isMobile ? "-50%" : "-115%";
   const card2TranslateX = isMobile ? "50%" : "115%";
