@@ -202,11 +202,23 @@ export function FinalCTASection() {
 
       {/* Footer */}
       <div
-        className="relative z-10 mt-24 pt-8 text-center"
+        className="relative z-10 mt-24 pt-8 pb-8 text-center flex flex-col items-center gap-2"
         style={{ borderTop: "1px solid var(--border)" }}
       >
         <p className="text-sm" style={{ color: "var(--text-muted)" }}>
           © 2025 mood zahi · Hecho con 💛 para runners
+        </p>
+        <p className="text-xs" style={{ color: "var(--text-muted)" }}>
+          Realizado por{" "}
+          <a
+            href="https://chironte.com/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="font-semibold transition-colors hover:brightness-125"
+            style={{ color: "var(--accent)" }}
+          >
+            CHIRONTE
+          </a>
         </p>
       </div>
     </section>
