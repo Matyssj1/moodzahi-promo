@@ -6,7 +6,7 @@ export async function POST(req: Request) {
     const { email, recaptchaToken } = await req.json();
 
     // 1. VALIDACIÓN ESTRICTA DE EMAIL (Formato HTML5 y límite de longitud)
-    const emailRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
+    const emailRegex = /^[a-zA-Z0-9._\-\+]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}$/;
     if (!email || typeof email !== 'string' || email.length > 255 || !emailRegex.test(email)) {
       return NextResponse.json(
         { success: false, message: 'Email inválido o formato incorrecto.' },

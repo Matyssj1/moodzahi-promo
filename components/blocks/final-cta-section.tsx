@@ -18,10 +18,10 @@ export function FinalCTASection() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    const emailRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
+    const emailRegex = /^[a-zA-Z0-9._\-\+]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}$/;
     
     if (!email || email.length > 255 || !emailRegex.test(email)) {
-      setError("Ingresá un email válido (ej: nombre@dominio.com).");
+      setError("Ingresá un email válido (solo letras, números, puntos y guiones).");
       return;
     }
     setLoading(true);
@@ -159,7 +159,7 @@ export function FinalCTASection() {
                     type="email"
                     value={email}
                     onChange={(e) => { 
-                      const sanitizedValue = e.target.value.replace(/[\s"()*,:;<>[\\\]]/g, '');
+                      const sanitizedValue = e.target.value.replace(/[^a-zA-Z0-9.\-@+]/g, '');
                       setEmail(sanitizedValue); 
                       setError(""); 
                     }}

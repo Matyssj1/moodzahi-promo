@@ -38,11 +38,11 @@ export function HeroSection() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
-    // Validación estricta HTML5 de email
-    const emailRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
+    // Validación ultra-estricta (solo letras, números, puntos, guiones, y signo más)
+    const emailRegex = /^[a-zA-Z0-9._\-\+]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}$/;
     
     if (!email || email.length > 255 || !emailRegex.test(email)) {
-      setError("Ingresá un email válido (ej: nombre@dominio.com).");
+      setError("Ingresá un email válido (solo letras, números, puntos y guiones).");
       return;
     }
 
@@ -207,8 +207,8 @@ export function HeroSection() {
                     <input
                       type="email" value={email}
                       onChange={(e) => { 
-                        // Bloquear espacios y caracteres que jamás van en un email
-                        const sanitizedValue = e.target.value.replace(/[\s"()*,:;<>[\\\]]/g, '');
+                        // Solo permite letras, números, puntos, guiones, arroba y signo más
+                        const sanitizedValue = e.target.value.replace(/[^a-zA-Z0-9.\-@+]/g, '');
                         setEmail(sanitizedValue); 
                         setError(""); 
                       }}
