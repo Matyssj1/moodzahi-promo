@@ -128,7 +128,7 @@ export function AppPreviewSection() {
                 mass: 1,
                 delay: screen.delay 
               }}
-              className={`flex flex-col items-center gap-6 ${i >= 2 ? "hidden md:flex" : ""}`}
+              className={`flex flex-col items-center gap-6 ${i >= 2 ? "hidden md:flex" : ""} ${i === 0 ? "order-2 sm:order-[0]" : i === 1 ? "order-1 sm:order-[0]" : ""}`}
             >
               <PhoneFrame
                 src={screen.src}
