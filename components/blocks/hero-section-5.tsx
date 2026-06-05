@@ -88,8 +88,8 @@ export function HeroSection() {
       {/* Fondo Grid de 4 Imágenes (Móvil: 2x2 | Desktop: 4 columnas) para llenar los espacios sin estirar */}
       <div className="absolute inset-0 flex flex-wrap md:flex-nowrap">
 
-        {/* Columna 1 */}
-        <div className="relative w-1/2 md:w-1/4 h-1/2 md:h-full overflow-hidden border-r border-black/10">
+        {/* Columna 1 (Mobile: pasa a ser la 2da) */}
+        <div className="relative w-1/2 md:w-1/4 h-1/2 md:h-full overflow-hidden border-r border-black/10 order-2 md:order-1">
           <Image
             src="/assets/zahi-portada.jpeg"
             alt="Zahi Portada 1"
@@ -100,8 +100,8 @@ export function HeroSection() {
           />
         </div>
 
-        {/* Columna 2 */}
-        <div className="relative w-1/2 md:w-1/4 h-1/2 md:h-full overflow-hidden border-r border-black/10">
+        {/* Columna 2 (Mobile: pasa a ser la 1ra) */}
+        <div className="relative w-1/2 md:w-1/4 h-1/2 md:h-full overflow-hidden border-r border-black/10 order-1 md:order-2">
           <Image
             src="/assets/zahi-portada-3.jpeg"
             alt="Zahi Portada 2"
@@ -113,7 +113,7 @@ export function HeroSection() {
         </div>
 
         {/* Columna 3 */}
-        <div className="relative w-1/2 md:w-1/4 h-1/2 md:h-full overflow-hidden border-r border-black/10">
+        <div className="relative w-1/2 md:w-1/4 h-1/2 md:h-full overflow-hidden border-r border-black/10 order-3">
           <Image
             src="/assets/zahi-portada-2.jpeg"
             alt="Zahi Portada 3"
@@ -125,7 +125,7 @@ export function HeroSection() {
         </div>
 
         {/* Columna 4 */}
-        <div className="relative w-1/2 md:w-1/4 h-1/2 md:h-full overflow-hidden">
+        <div className="relative w-1/2 md:w-1/4 h-1/2 md:h-full overflow-hidden order-4">
           <Image
             src="/assets/zahi-portada-4.jpeg"
             alt="Zahi Portada 4"
