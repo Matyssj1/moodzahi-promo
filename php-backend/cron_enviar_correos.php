@@ -55,18 +55,18 @@ try {
             // Contenido del Email
             $mail->isHTML(true);
             $mail->CharSet = 'UTF-8';
-            $mail->Subject = '¡Ya estás en la lista de espera de mood ZAHI!';
+            $mail->Subject = '¡Ya estás en la lista de espera de MOOD ZAHI!';
             $mail->Body    = '
                 <div style="font-family: Arial, sans-serif; max-width: 600px; margin: auto; padding: 20px; border: 1px solid #eee; border-radius: 10px;">
                     <h2 style="color: #d97706; text-transform: uppercase;">¡Gracias por unirte!</h2>
                     <p style="font-size: 16px; color: #333;">Hola,</p>
-                    <p style="font-size: 16px; color: #333;">Hemos registrado tu solicitud para el acceso anticipado a <strong>mood ZAHI</strong>.</p>
+                    <p style="font-size: 16px; color: #333;">Hemos registrado tu solicitud para el acceso anticipado a <strong>MOOD ZAHI</strong>.</p>
                     <p style="font-size: 16px; color: #333;">Te avisaremos muy pronto cuando tu cuenta esté lista para activarse y puedas empezar a sentir cada kilómetro.</p>
                     <br>
-                    <p style="font-size: 14px; color: #666;">El equipo de mood ZAHI</p>
+                    <p style="font-size: 14px; color: #666;">El equipo de MOOD ZAHI</p>
                 </div>
             ';
-            $mail->AltBody = "¡Gracias por unirte!\n\nHemos registrado tu solicitud para el acceso anticipado a mood ZAHI.\nTe avisaremos muy pronto cuando tu cuenta esté lista.\n\nEl equipo de mood ZAHI";
+            $mail->AltBody = "¡Gracias por unirte!\n\nHemos registrado tu solicitud para el acceso anticipado a MOOD ZAHI.\nTe avisaremos muy pronto cuando tu cuenta esté lista.\n\nEl equipo de MOOD ZAHI";
 
             // Enviar correo
             $mail->send();
