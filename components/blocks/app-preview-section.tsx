@@ -98,7 +98,7 @@ export function AppPreviewSection() {
             className="mt-4 text-4xl font-extrabold tracking-tight md:text-5xl lg:text-6xl"
             style={{ color: "var(--text-primary)" }}
           >
-            Diseñada para runners{" "}
+            Diseñada para quienes quieren desafiar sus{" "}
             <span
               style={{
                 background: "linear-gradient(to right, var(--accent), #f59e0b)",
@@ -106,7 +106,7 @@ export function AppPreviewSection() {
                 WebkitTextFillColor: "transparent",
               }}
             >
-              de verdad
+              límites
             </span>
           </h2>
           <p className="mx-auto mt-6 max-w-2xl text-lg md:text-xl" style={{ color: "var(--text-secondary)" }}>

@@ -91,7 +91,7 @@ export function HeroSection() {
         {/* Columna 1 */}
         <div className="relative w-1/2 md:w-1/4 h-1/2 md:h-full overflow-hidden border-r border-black/10">
           <Image
-            src="/assets/zahi-portada.jpeg"
+            src="/assets/zahi-portada-3.jpeg"
             alt="Zahi Portada 1"
             fill
             sizes="(max-width: 768px) 50vw, 25vw"
@@ -103,7 +103,7 @@ export function HeroSection() {
         {/* Columna 2 */}
         <div className="relative w-1/2 md:w-1/4 h-1/2 md:h-full overflow-hidden border-r border-black/10">
           <Image
-            src="/assets/zahi-portada-3.jpeg"
+            src="/assets/zahi-portada.jpeg"
             alt="Zahi Portada 2"
             fill
             sizes="(max-width: 768px) 50vw, 25vw"
