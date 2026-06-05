@@ -2,23 +2,26 @@
 // php-backend/cron_enviar_correos.php
 // Este script lee la DB y usa PHPMailer para enviar los correos pendientes
 
-require 'vendor/autoload.php'; // Asegúrate de tener instalado PHPMailer vía Composer
+require 'vendor/autoload.php';
+
+// Cargar variables de entorno de forma segura
+$dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
+$dotenv->load();
 
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 
 // Configuración de la Base de Datos
-$host = '172.16.81.28';
-$dbname = 'moodzahi';
-$user = 'root';
-$pass = 'Chironte5526_';
+$host = $_ENV['DB_HOST'];
+$dbname = $_ENV['DB_NAME'];
+$user = $_ENV['DB_USER'];
+$pass = $_ENV['DB_PASS'];
 
-// --- CONFIGURACIÓN DE TU SERVIDOR SMTP ---
-// Reemplaza esto con los datos de tu proveedor de correos (ej. Hostinger, SendGrid, Gmail, etc)
-$smtpHost = 'smtp.tudominio.com';
-$smtpUser = 'hola@tudominio.com';
-$smtpPass = 'TU_CONTRASEÑA';
-$smtpPort = 465; // o 587 dependiendo de tu proveedor
+// --- CONFIGURACIÓN DEL SERVIDOR SMTP ---
+$smtpHost = $_ENV['SMTP_HOST'];
+$smtpUser = $_ENV['SMTP_USER'];
+$smtpPass = $_ENV['SMTP_PASS'];
+$smtpPort = $_ENV['SMTP_PORT'];
 
 try {
     $pdo = new PDO("mysql:host=$host;dbname=$dbname;charset=utf8mb4", $user, $pass);

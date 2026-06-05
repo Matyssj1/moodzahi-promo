@@ -23,20 +23,24 @@ export async function POST(req: Request) {
     }
 
     const secretKey = process.env.RECAPTCHA_SECRET_KEY;
-    if (!secretKey || secretKey === "PONER_AQUI_LA_CLAVE_SECRETA") {
-      console.warn("ADVERTENCIA: RECAPTCHA_SECRET_KEY no está configurada o es la de prueba. Se saltará la verificación real.");
-    } else {
-      const verifyUrl = `https://www.google.com/recaptcha/api/siteverify?secret=${secretKey}&response=${recaptchaToken}`;
-      const recaptchaResponse = await fetch(verifyUrl, { method: "POST" });
-      const recaptchaData = await recaptchaResponse.json();
+    if (!secretKey) {
+      console.error("ERROR CRÍTICO: RECAPTCHA_SECRET_KEY no está configurada en las variables de entorno.");
+      return NextResponse.json(
+        { success: false, message: 'Error de configuración del servidor. Contacte al administrador.' },
+        { status: 500 }
+      );
+    }
 
-      if (!recaptchaData.success || recaptchaData.score < 0.5) {
-        console.error("Fallo de reCAPTCHA:", recaptchaData);
-        return NextResponse.json(
-          { success: false, message: 'No pudimos verificar que eres humano. Intenta de nuevo.' },
-          { status: 403 }
-        );
-      }
+    const verifyUrl = `https://www.google.com/recaptcha/api/siteverify?secret=${secretKey}&response=${recaptchaToken}`;
+    const recaptchaResponse = await fetch(verifyUrl, { method: "POST" });
+    const recaptchaData = await recaptchaResponse.json();
+
+    if (!recaptchaData.success || recaptchaData.score < 0.5) {
+      console.error("Fallo de reCAPTCHA:", recaptchaData);
+      return NextResponse.json(
+        { success: false, message: 'No pudimos verificar que eres humano. Intenta de nuevo.' },
+        { status: 403 }
+      );
     }
 
     // 3. CONEXIÓN A BASE DE DATOS Y GUARDADO
