@@ -49,7 +49,7 @@ try {
             $mail->Port       = $smtpPort;
 
             // Remitente y Destinatario
-            $mail->setFrom($smtpUser, 'mood ZAHI');
+            $mail->setFrom($smtpUser, 'MOOD ZAHI');
             $mail->addAddress($row['email']);
 
             // Contenido del Email
